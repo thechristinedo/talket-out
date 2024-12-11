@@ -5,6 +5,10 @@ import {
   generateTokenCookie,
   generateVerificationCode,
 } from "../libs/utils.js";
+import {
+  sendVerificationEmail,
+  sendWelcomeEmail,
+} from "../libs/mailtrap/emails.js";
 
 export const signup = async (req, res) => {
   const { email, fullName, password } = req.body;
@@ -40,16 +44,59 @@ export const signup = async (req, res) => {
     if (newUser) {
       await newUser.save();
       generateTokenCookie(newUser._id, res);
-      return res.status(201).json({
-        _id: newUser._id,
-        email: newUser.email,
-        verificationToken: newUser.verificationToken,
-      });
     } else {
       res.status(400).json({ message: "Invalid User Data" });
     }
+
+    // send verification email
+    await sendVerificationEmail(
+      newUser.email,
+      newUser.fullName,
+      verificationToken
+    );
+    return res.status(201).json({
+      _id: newUser._id,
+      email: newUser.email,
+      verificationToken: newUser.verificationToken,
+    });
   } catch (error) {
     console.log("Error in signup", error.message);
+    res.status(500).json({ message: "Invalid Server Error" });
+  }
+};
+
+export const verifyEmail = async (req, res) => {
+  const { code } = req.body;
+
+  try {
+    // find user and check if valid token and hasn't expired
+    const user = await User.findOne({
+      verificationToken: code,
+      verificationTokenExpiresAt: { $gt: Date.now() },
+    });
+    if (!user)
+      return res.status(400).json({
+        success: false,
+        message: "Invalid or expired verification code.",
+      });
+
+    // update user
+    user.isVerified = true;
+    user.verificationToken = undefined;
+    user.verificationTokenExpiresAt = undefined;
+    await user.save();
+
+    // send welcome email
+    await sendWelcomeEmail(user.email, user.fullName);
+    return res.status(200).json({
+      success: true,
+      message: "Email verified successfully",
+      email: user.email,
+      fullName: user.fullName,
+      isVerified: user.isVerified,
+    });
+  } catch (error) {
+    console.log("Error in verifyEmail", error.message);
     res.status(500).json({ message: "Invalid Server Error" });
   }
 };
@@ -57,7 +104,5 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {};
 
 export const logout = async (req, res) => {};
-
-export const verifyEmail = async (req, res) => {};
 
 export const updateProfile = async (req, res) => {};
