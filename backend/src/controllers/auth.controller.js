@@ -76,7 +76,6 @@ export const verifyEmail = async (req, res) => {
     });
     if (!user)
       return res.status(400).json({
-        success: false,
         message: "Invalid or expired verification code.",
       });
 
@@ -89,7 +88,6 @@ export const verifyEmail = async (req, res) => {
     // send welcome email
     await sendWelcomeEmail(user.email, user.fullName);
     return res.status(200).json({
-      success: true,
       message: "Email verified successfully",
       email: user.email,
       fullName: user.fullName,
@@ -103,6 +101,14 @@ export const verifyEmail = async (req, res) => {
 
 export const login = async (req, res) => {};
 
-export const logout = async (req, res) => {};
+export const logout = async (req, res) => {
+  try {
+    res.cookie("jwt", "", { maxAge: 0 });
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.log("Error in logout", error.message);
+    res.status(500).json({ message: "Invalid Server Error" });
+  }
+};
 
 export const updateProfile = async (req, res) => {};
