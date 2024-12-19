@@ -29,6 +29,7 @@ type AuthStoreProps = {
 
   checkAuth: () => Promise<void>;
   signup: (data: SignUpData) => Promise<void>;
+  logout: () => Promise<void>;
 };
 
 export const useAuthStore = create<AuthStoreProps>((set) => ({
@@ -63,6 +64,18 @@ export const useAuthStore = create<AuthStoreProps>((set) => ({
       else toast.error("Internal Server Error");
     } finally {
       set({ isSigningUp: false });
+    }
+  },
+
+  logout: async () => {
+    try {
+      await axiosInstance.post("/auth/logout");
+      set({ authUser: null });
+      toast.success("Logged out successfully");
+    } catch (error) {
+      if (axios.isAxiosError(error))
+        toast.error(error.response?.data.message || "Error in logout");
+      else toast.error("Internal Server Error");
     }
   },
 }));
