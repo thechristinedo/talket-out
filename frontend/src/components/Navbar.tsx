@@ -16,14 +16,22 @@ const Navbar = () => {
 
           {/* right side */}
           <div className="flex items-center lg:gap-6 gap-4">
-            <Link
+            <a
+              href="http://www.github.com/thechristinedo"
+              target="_blank"
+              className="flex items-center gap-1"
+            >
+              <Settings className="size-6" />
+              <span className="hidden sm:inline font-semibold">Settings</span>
+            </a>
+
+            {/* <Link
               to={"/settings"}
               className={`btn btn-sm gap-1 flex transition-colors items-center `}
             >
               <Settings className="size-6" />
               <span className="hidden sm:inline font-semibold">Settings</span>
-            </Link>
-
+            </Link> */}
             {authUser && (
               <>
                 <Link

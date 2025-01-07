@@ -1,6 +1,6 @@
 import { Camera, Mail, User } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const ProfilePage = () => {
   const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
@@ -21,7 +21,7 @@ const ProfilePage = () => {
 
   return (
     <div className="min-h-screen pt-20">
-      <div className="max-w-2xl mx-auto px-4 py-8 rounded-lg">
+      <div className="max-w-2xl mx-auto px-4 py-8 rounded-lg bg-gray-50">
         <div className="text-center mb-4">
           <h1 className="text-2xl font-bold">Edit Profile</h1>
         </div>
@@ -50,7 +50,7 @@ const ProfilePage = () => {
               />
             </label>
           </div>
-          <p className="text-md">
+          <p className="text-md italic">
             {isUpdatingProfile ? "Uploading..." : "Upload a new selfie!"}
           </p>
         </div>

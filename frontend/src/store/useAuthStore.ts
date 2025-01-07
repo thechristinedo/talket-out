@@ -42,7 +42,7 @@ type AuthStoreProps = {
   updateProfile: (data: UpdateProfileData) => Promise<void>;
 };
 
-export const useAuthStore = create<AuthStoreProps>((set, get) => ({
+export const useAuthStore = create<AuthStoreProps>((set) => ({
   authUser: null,
   isSigningUp: false,
   isLoggingIn: false,
