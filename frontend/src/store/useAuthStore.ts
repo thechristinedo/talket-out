@@ -20,6 +20,11 @@ type SignUpData = {
   password: string;
 };
 
+type LoginData = {
+  email: string;
+  password: string;
+};
+
 type AuthStoreProps = {
   authUser: User | null;
   isSigningUp: boolean;
@@ -29,6 +34,7 @@ type AuthStoreProps = {
 
   checkAuth: () => Promise<void>;
   signup: (data: SignUpData) => Promise<void>;
+  login: (data: LoginData) => Promise<void>;
   logout: () => Promise<void>;
 };
 
@@ -64,6 +70,21 @@ export const useAuthStore = create<AuthStoreProps>((set) => ({
       else toast.error("Internal Server Error");
     } finally {
       set({ isSigningUp: false });
+    }
+  },
+
+  login: async (data) => {
+    set({ isLoggingIn: true });
+    try {
+      const res = await axiosInstance.post("/auth/login", data);
+      set({ authUser: res.data });
+      toast.success("Logged in successfully");
+    } catch (error) {
+      if (axios.isAxiosError(error))
+        toast.error(error.response?.data.message || "Error in login");
+      else toast.error("Internal Server Error");
+    } finally {
+      set({ isLoggingIn: false });
     }
   },
 

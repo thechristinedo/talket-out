@@ -1,21 +1,50 @@
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
+import { Inbox, LogOut, Settings, User } from "lucide-react";
 
 const Navbar = () => {
   const { authUser, logout } = useAuthStore();
   return (
-    <div className="bg-slate-500">
-      {authUser && (
-        <>
-          <Link to="/profile">
-            <span>Profile</span>
+    <header className="backdrop-blur-lg fixed w-full top-0 z-100">
+      <div className="container mx-auto px-4 h-16">
+        <div className="flex justify-between items-center h-full">
+          {/* left side */}
+          <Link to="/" className="flex items-center gap-1">
+            <Inbox className="size-6" />
+            <h1 className="text-md font-semibold">Talket Out!</h1>
           </Link>
-          <button onClick={logout}>
-            <span>Logout</span>
-          </button>
-        </>
-      )}
-    </div>
+
+          {/* right side */}
+          <div className="flex items-center gap-3">
+            <Link
+              to={"/settings"}
+              className={`btn btn-sm gap-1 flex transition-colors items-center `}
+            >
+              <Settings className="size-6" />
+              <span className="hidden sm:inline font-semibold">Settings</span>
+            </Link>
+
+            {authUser && (
+              <>
+                <Link
+                  to={"/profile"}
+                  className={`btn btn-sm flex gap-1 items-center`}
+                >
+                  <User className="size-6" />
+                  <span className="hidden sm:inline font-semibold">
+                    Profile
+                  </span>
+                </Link>
+                <button className="flex gap-1 items-center" onClick={logout}>
+                  <LogOut className="size-6" />
+                  <span className="hidden sm:inline font-semibold">Logout</span>
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </header>
   );
 };
 
