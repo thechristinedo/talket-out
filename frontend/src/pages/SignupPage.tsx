@@ -33,7 +33,7 @@ const SignupPage = () => {
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
       {/* left column */}
-      <div className=" flex flex-col justify-center items-center mt-16">
+      <div className=" flex flex-col justify-center items-center pt-20">
         <div className="w-full max-w-md space-y-8">
           {/* header */}
           <div className="text-center mb-8">
@@ -115,7 +115,7 @@ const SignupPage = () => {
                   <LoaderCircle className="animate-spin" />
                 </>
               ) : (
-                <p className="text-lg">Sign up</p>
+                <p className="text-lg font-medium">Sign up</p>
               )}
             </button>
           </form>
@@ -124,7 +124,7 @@ const SignupPage = () => {
           <div className="text-center">
             <p className="text-lg">
               Already have an account?{" "}
-              <Link to="/login" className="text-blue-400 underline">
+              <Link to="/login" className="text-blue-400 underline font-medium">
                 Sign in
               </Link>
             </p>

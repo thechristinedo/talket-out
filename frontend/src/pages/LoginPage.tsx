@@ -20,7 +20,7 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
       {/* left column */}
-      <div className=" flex flex-col justify-center items-center mt-16">
+      <div className=" flex flex-col justify-center items-center pt-20">
         <div className="w-full max-w-md space-y-8">
           {/* header */}
           <div className="text-center mb-8">
@@ -85,16 +85,19 @@ const LoginPage = () => {
                   <LoaderCircle className="animate-spin" />
                 </>
               ) : (
-                <p className="text-lg">Login</p>
+                <p className="text-lg font-medium">Login</p>
               )}
             </button>
           </form>
 
-          {/* login redirect */}
+          {/* signup redirect */}
           <div className="text-center">
             <p className="text-lg">
               Don't have an account?{" "}
-              <Link to="/signup" className="text-blue-400 underline">
+              <Link
+                to="/signup"
+                className="text-blue-400 underline font-medium"
+              >
                 Sign up
               </Link>
             </p>

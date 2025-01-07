@@ -5,17 +5,17 @@ import { Inbox, LogOut, Settings, User } from "lucide-react";
 const Navbar = () => {
   const { authUser, logout } = useAuthStore();
   return (
-    <header className="backdrop-blur-lg fixed w-full top-0 z-100">
+    <header className="backdrop-blur-lg fixed w-full top-0 z-100 bg-blue-100 border-b-2 border-blue-200">
       <div className="container mx-auto px-4 h-16">
         <div className="flex justify-between items-center h-full">
           {/* left side */}
-          <Link to="/" className="flex items-center gap-1">
+          <Link to="/" className="flex items-center gap-2">
             <Inbox className="size-6" />
             <h1 className="text-md font-semibold">Talket Out!</h1>
           </Link>
 
           {/* right side */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center lg:gap-6 gap-4">
             <Link
               to={"/settings"}
               className={`btn btn-sm gap-1 flex transition-colors items-center `}

@@ -9,9 +9,8 @@ type User = {
   fullName: string;
   password: string;
   profilePic: string;
-  //   lastLogin: string;
-  //   createdAt: string;
-  //   updatedAt: string;
+  createdAt: string;
+  isVerified: boolean;
 };
 
 type SignUpData = {
@@ -25,6 +24,10 @@ type LoginData = {
   password: string;
 };
 
+type UpdateProfileData = {
+  profilePic: string;
+};
+
 type AuthStoreProps = {
   authUser: User | null;
   isSigningUp: boolean;
@@ -36,9 +39,10 @@ type AuthStoreProps = {
   signup: (data: SignUpData) => Promise<void>;
   login: (data: LoginData) => Promise<void>;
   logout: () => Promise<void>;
+  updateProfile: (data: UpdateProfileData) => Promise<void>;
 };
 
-export const useAuthStore = create<AuthStoreProps>((set) => ({
+export const useAuthStore = create<AuthStoreProps>((set, get) => ({
   authUser: null,
   isSigningUp: false,
   isLoggingIn: false,
@@ -97,6 +101,21 @@ export const useAuthStore = create<AuthStoreProps>((set) => ({
       if (axios.isAxiosError(error))
         toast.error(error.response?.data.message || "Error in logout");
       else toast.error("Internal Server Error");
+    }
+  },
+
+  updateProfile: async (data) => {
+    set({ isUpdatingProfile: true });
+    try {
+      const res = await axiosInstance.put("/auth/update-profile", data);
+      set({ authUser: res.data });
+      toast.success("Profile updated successfully");
+    } catch (error) {
+      if (axios.isAxiosError(error))
+        toast.error(error.response?.data.message || "File too big!");
+      else toast.error("Internal Server Error");
+    } finally {
+      set({ isUpdatingProfile: false });
     }
   },
 }));
