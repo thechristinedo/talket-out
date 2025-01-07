@@ -3,6 +3,7 @@ import { useAuthStore } from "../store/useAuthStore";
 import { Eye, EyeClosed, LoaderCircle, Lock, Mail, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import PasswordMeter from "../components/PasswordMeter";
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -37,7 +38,7 @@ const SignupPage = () => {
           {/* header */}
           <div className="text-center mb-8">
             <div className="flex flex-col items-center gap-2">
-              <h1 className="text-3xl font-semibold">Create an account</h1>
+              <h1 className="text-3xl font-bold">Create an account</h1>
               <p className="text-lg">Get started with a free account today</p>
             </div>
           </div>
@@ -100,6 +101,8 @@ const SignupPage = () => {
               </button>
             </div>
 
+            <PasswordMeter password={formData.password} />
+
             <button
               type="submit"
               className={`w-full rounded-lg shadow-md py-2 hover:bg-blue-500  transition-colors ${
@@ -115,8 +118,6 @@ const SignupPage = () => {
                 <p className="text-lg">Sign up</p>
               )}
             </button>
-
-            {/* TODO: PASSWORD STRENGTH METER */}
           </form>
 
           {/* login redirect */}
