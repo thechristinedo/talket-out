@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import Message from "../models/message.model.js";
 import cloudinary from "../libs/cloudinary.js";
+import { getReceiverSocketId, io } from "../libs/socket.js";
 
 export const getUsers = async (req, res) => {
   try {
@@ -60,7 +61,11 @@ export const sendMessage = async (req, res) => {
     });
     await newMessage.save();
 
-    // TODO: REALTIME FUNCTIONALITY (socket.io)
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    // if it exists, that means the user is online
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", newMessage); // to is to an individual
+    }
 
     res.status(201).json(newMessage);
   } catch (error) {
