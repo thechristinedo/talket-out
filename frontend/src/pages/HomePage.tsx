@@ -5,6 +5,7 @@ import { useChatStore } from "../store/useChatStore";
 
 const HomePage = () => {
   const { selectedUser } = useChatStore();
+
   return (
     <div className="min-h-screen pt-16 flex items-center justify-center">
       <div className="bg-gray-100 max-w-7xl rounded-lg drop-shadow-lg flex w-full h-[calc(100vh-8rem)]">

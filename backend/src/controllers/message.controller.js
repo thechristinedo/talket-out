@@ -1,5 +1,6 @@
 import User from "../models/user.model.js";
 import Message from "../models/message.model.js";
+import cloudinary from "../libs/cloudinary.js";
 
 export const getUsers = async (req, res) => {
   try {
@@ -61,7 +62,7 @@ export const sendMessage = async (req, res) => {
 
     // TODO: REALTIME FUNCTIONALITY (socket.io)
 
-    res.status(201).json({ newMessage });
+    res.status(201).json(newMessage);
   } catch (error) {
     console.log("Error in sendMessage", error.message);
     res.status(500).json({ message: "Internal Server Error" });

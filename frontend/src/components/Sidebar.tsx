@@ -2,12 +2,12 @@ import { useEffect } from "react";
 import { useChatStore } from "../store/useChatStore";
 import SidebarSkeleton from "./skeletons/SidebarSkeleton";
 import { Contact } from "lucide-react";
+import { useAuthStore } from "../store/useAuthStore";
 
 const Sidebar = () => {
   const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } =
     useChatStore();
-
-  const onlineUsers = [];
+  const { onlineUsers } = useAuthStore();
 
   useEffect(() => {
     getUsers();
@@ -17,7 +17,7 @@ const Sidebar = () => {
 
   return (
     <aside className="lg:w-80 w-20 bg-gray-200 h-full flex flex-col">
-      <div className="flex items-center gap-2 p-5 justify-center drop-shadow-sm shadow">
+      <div className="flex items-center gap-2 p-6 justify-center drop-shadow-sm shadow">
         <Contact className="size-6" />
         <p className="text-md font-semibold lg:block hidden">Friends</p>
       </div>

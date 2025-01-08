@@ -6,9 +6,9 @@ import cookieParser from "cookie-parser";
 import connectDB from "./libs/db.js";
 import authRoutes from "./routes/auth.routes.js";
 import messageRoutes from "./routes/message.routes.js";
+import { app, server } from "./libs/socket.js";
 
 dotenv.config();
-const app = express();
 const PORT = process.env.PORT || 5000;
 
 // built-in middleware
@@ -20,7 +20,7 @@ app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use("/api/auth", authRoutes);
 app.use("/api/message", messageRoutes);
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   connectDB();
   console.log(`Server started on PORT: ${PORT}\nhttp://localhost:5000"`);
 });

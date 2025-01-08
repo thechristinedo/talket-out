@@ -22,6 +22,11 @@ type Message = {
   createdAt: Date;
 };
 
+type MessageData = {
+  text: string;
+  image: string | null;
+};
+
 type ChatStoreProps = {
   messages: Message[];
   users: User[];
@@ -31,7 +36,8 @@ type ChatStoreProps = {
 
   getUsers: () => Promise<void>;
   getMessages: (userId: string) => Promise<void>;
-  setSelectedUser: (selectedUser: User) => void;
+  sendMessage: (messageData: MessageData) => Promise<void>;
+  setSelectedUser: (selectedUser: User | null) => void;
 };
 
 export const useChatStore = create<ChatStoreProps>((set, get) => ({
@@ -71,5 +77,21 @@ export const useChatStore = create<ChatStoreProps>((set, get) => ({
     }
   },
 
-  setSelectedUser: (selectedUser: User) => set({ selectedUser }),
+  sendMessage: async (messageData) => {
+    const { selectedUser, messages } = get();
+
+    try {
+      const res = await axiosInstance.post(
+        `/message/send/${selectedUser!._id}`,
+        messageData
+      );
+      set({ messages: [...messages, res.data] });
+    } catch (error) {
+      if (axios.isAxiosError(error))
+        toast.error(error.response?.data.message || "Error in sendMessage");
+      else toast.error("Internal Server Error");
+    }
+  },
+
+  setSelectedUser: (selectedUser: User | null) => set({ selectedUser }),
 }));

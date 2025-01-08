@@ -1,4 +1,4 @@
-import { Camera, Loader, Mail, User } from "lucide-react";
+import { Camera, LoaderCircle, Mail, User } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useEffect, useState } from "react";
 
@@ -32,12 +32,12 @@ const ProfilePage = () => {
   if (isGettingProfile)
     return (
       <div className="flex justify-center items-center h-screen">
-        <Loader className="size-10 animate-spin" />
+        <LoaderCircle className="size-10 animate-spin" />
       </div>
     );
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen pt-20 ">
       <div className="max-w-2xl mx-auto px-4 py-8 rounded-lg bg-gray-50">
         <div className="text-center mb-4">
           <h1 className="text-2xl font-bold">Edit Profile</h1>
@@ -72,13 +72,13 @@ const ProfilePage = () => {
           </p>
         </div>
 
-        <div className="flex flex-col gap-6 mt-8">
+        <div className="flex flex-col gap-6 mt-8 ">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <User className="size-5" />
               <p className="text-md font-semibold">Full Name</p>
             </div>
-            <p className="w-full px-2 py-1.5 rounded-md">
+            <p className="w-full px-2 py-1.5 rounded-md bg-slate-200">
               {authUser?.fullName}
             </p>
           </div>
@@ -87,7 +87,9 @@ const ProfilePage = () => {
               <Mail className="size-5" />
               <p className="text-md font-semibold">Email</p>
             </div>
-            <p className="w-full px-2 py-1.5 rounded-md">{authUser?.email}</p>
+            <p className="w-full px-2 py-1.5 rounded-md bg-slate-200">
+              {authUser?.email}
+            </p>
           </div>
         </div>
 

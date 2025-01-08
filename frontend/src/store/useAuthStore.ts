@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useChatStore } from "./useChatStore";
 
 type User = {
   _id: string;
@@ -35,6 +36,7 @@ type AuthStoreProps = {
   isUpdatingProfile: boolean;
   isGettingProfile: boolean;
   isCheckingAuth: boolean;
+  onlineUsers: string[];
 
   checkAuth: () => Promise<void>;
   signup: (data: SignUpData) => Promise<void>;
@@ -51,8 +53,11 @@ export const useAuthStore = create<AuthStoreProps>((set) => ({
   isUpdatingProfile: false,
   isGettingProfile: false,
   isCheckingAuth: true,
+  onlineUsers: [],
 
   checkAuth: async () => {
+    set({ isCheckingAuth: true });
+
     try {
       const res = await axiosInstance.get("/auth/check");
       set({ authUser: res.data });
@@ -100,6 +105,7 @@ export const useAuthStore = create<AuthStoreProps>((set) => ({
       await axiosInstance.post("/auth/logout");
       set({ authUser: null });
       toast.success("Logged out successfully");
+      useChatStore.setState({ selectedUser: null });
     } catch (error) {
       if (axios.isAxiosError(error))
         toast.error(error.response?.data.message || "Error in logout");

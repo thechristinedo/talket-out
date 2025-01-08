@@ -122,6 +122,7 @@ export const login = async (req, res) => {
       _id: user._id,
       email: user.email,
       fullName: user.fullName,
+      profilePic: user.profilePic,
     });
   } catch (error) {
     console.log("Error in login", error.message);
@@ -173,10 +174,7 @@ export const getProfile = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(200).json({
-      profilePic: user.profilePic,
-      createdAt: user.createdAt,
-    });
+    res.status(200).json(user);
   } catch (error) {
     console.log("Error in getProfile", error.message);
     res.status(500).json({ message: "Internal Server Error" });
