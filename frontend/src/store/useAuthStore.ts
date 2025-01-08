@@ -33,6 +33,7 @@ type AuthStoreProps = {
   isSigningUp: boolean;
   isLoggingIn: boolean;
   isUpdatingProfile: boolean;
+  isGettingProfile: boolean;
   isCheckingAuth: boolean;
 
   checkAuth: () => Promise<void>;
@@ -40,6 +41,7 @@ type AuthStoreProps = {
   login: (data: LoginData) => Promise<void>;
   logout: () => Promise<void>;
   updateProfile: (data: UpdateProfileData) => Promise<void>;
+  getProfile: () => Promise<void>;
 };
 
 export const useAuthStore = create<AuthStoreProps>((set) => ({
@@ -47,6 +49,7 @@ export const useAuthStore = create<AuthStoreProps>((set) => ({
   isSigningUp: false,
   isLoggingIn: false,
   isUpdatingProfile: false,
+  isGettingProfile: false,
   isCheckingAuth: true,
 
   checkAuth: async () => {
@@ -116,6 +119,21 @@ export const useAuthStore = create<AuthStoreProps>((set) => ({
       else toast.error("Internal Server Error");
     } finally {
       set({ isUpdatingProfile: false });
+    }
+  },
+
+  getProfile: async () => {
+    set({ isGettingProfile: true });
+
+    try {
+      const res = await axiosInstance.get("/auth/get-profile");
+      set({ authUser: res.data });
+    } catch (error) {
+      if (axios.isAxiosError(error))
+        toast.error(error.response?.data.message || "Error in getProfile");
+      else toast.error("Internal Server Error");
+    } finally {
+      set({ isGettingProfile: false });
     }
   },
 }));

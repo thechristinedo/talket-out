@@ -1,10 +1,20 @@
-import { Camera, Mail, User } from "lucide-react";
+import { Camera, Loader, Mail, User } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ProfilePage = () => {
-  const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
+  const {
+    authUser,
+    isUpdatingProfile,
+    updateProfile,
+    isGettingProfile,
+    getProfile,
+  } = useAuthStore();
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
+
+  useEffect(() => {
+    getProfile();
+  }, [getProfile]);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -18,6 +28,13 @@ const ProfilePage = () => {
       await updateProfile({ profilePic: base64Image });
     };
   };
+
+  if (isGettingProfile)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader className="size-10 animate-spin" />
+      </div>
+    );
 
   return (
     <div className="min-h-screen pt-20">

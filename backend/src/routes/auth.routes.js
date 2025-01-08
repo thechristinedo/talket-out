@@ -6,6 +6,7 @@ import {
   logout,
   verifyEmail,
   updateProfile,
+  getProfile,
   checkAuth,
 } from "../controllers/auth.controller.js";
 import { protectRoute } from "../middleware/auth.middleware.js";
@@ -13,6 +14,7 @@ import { protectRoute } from "../middleware/auth.middleware.js";
 const router = express.Router();
 
 router.get("/check", protectRoute, checkAuth);
+router.get("/get-profile", protectRoute, getProfile);
 
 router.post("/signup", signup);
 router.post("/login", login);

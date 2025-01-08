@@ -1,8 +1,6 @@
-import { Inbox } from "lucide-react";
-
 const EmptyChatBox = () => {
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full space-y-6 text-center">
+    <div className="flex flex-col items-center justify-center w-full space-y-6 text-center">
       {/* <Inbox className="size-10 animate-pulse" /> */}
       <p className="text-2xl font-medium">
         Welcome to <span className="font-bold animate-pulse">Talket Out</span>,

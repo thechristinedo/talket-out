@@ -1,5 +1,5 @@
 const ChatBox = () => {
-  return <div>ChatBox</div>;
+  return <div className="w-full"></div>;
 };
 
 export default ChatBox;
