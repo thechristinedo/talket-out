@@ -9,13 +9,23 @@ import ChatInput from "./ChatInput";
 import { formatDateStamp, formatTimeStamp, isSameDay } from "../lib/utils";
 
 const ChatBox = () => {
-  const { messages, getMessages, isMessagesLoading, selectedUser } =
-    useChatStore();
+  const {
+    messages,
+    getMessages,
+    isMessagesLoading,
+    selectedUser,
+    updateMessages,
+    retireFromMessages,
+  } = useChatStore();
   const { authUser } = useAuthStore();
   const messageEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (selectedUser?._id) getMessages(selectedUser._id);
+
+    updateMessages();
+
+    return () => retireFromMessages();
   }, [selectedUser?._id, getMessages]);
 
   useEffect(() => {
