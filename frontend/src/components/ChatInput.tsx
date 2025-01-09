@@ -50,7 +50,7 @@ const ChatInput = () => {
   return (
     <div className="w-full">
       {imagePreview && (
-        <div className="px-3 flex">
+        <div className="px-3 pt-2 flex">
           <div className="relative">
             <img
               src={imagePreview}

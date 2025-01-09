@@ -93,7 +93,11 @@ export const useChatStore = create<ChatStoreProps>((set, get) => ({
       set({ messages: [...messages, res.data] });
     } catch (error) {
       if (axios.isAxiosError(error))
-        toast.error(error.response?.data.message || "Error in sendMessage");
+        toast.error(
+          error.response?.data.message ||
+            "Image file too big!" ||
+            "Error in sendMessage"
+        );
       else toast.error("Internal Server Error");
     }
   },

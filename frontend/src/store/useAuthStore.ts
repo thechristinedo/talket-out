@@ -72,7 +72,6 @@ export const useAuthStore = create<AuthStoreProps>((set, get) => ({
       set({ authUser: res.data });
       get().connectSocket();
     } catch (error) {
-      console.log("Error in checkAuth", error);
       set({ authUser: null });
     } finally {
       set({ isCheckingAuth: false });
@@ -134,7 +133,7 @@ export const useAuthStore = create<AuthStoreProps>((set, get) => ({
       toast.success("Profile updated successfully");
     } catch (error) {
       if (axios.isAxiosError(error))
-        toast.error(error.response?.data.message || "File too big!");
+        toast.error(error.response?.data.message || "Image file too big!");
       else toast.error("Internal Server Error");
     } finally {
       set({ isUpdatingProfile: false });

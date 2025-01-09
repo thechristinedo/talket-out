@@ -5,7 +5,6 @@ import { Contact } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 
 const Sidebar = () => {
-  // const [showOnlineUsers, setShowOnlineUsers] = useState(false);
   const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } =
     useChatStore();
   const { onlineUsers } = useAuthStore();
@@ -14,9 +13,11 @@ const Sidebar = () => {
     getUsers();
   }, [getUsers]);
 
-  // const onlineUsersList = showOnlineUsers
-  //   ? users.filter((user) => onlineUsers.includes(user._id))
-  //   : users;
+  const sortedUsers = [...users].sort((a, b) => {
+    const temp1 = onlineUsers.includes(a._id) ? 1 : 0;
+    const temp2 = onlineUsers.includes(b._id) ? 1 : 0;
+    return temp2 - temp1;
+  });
 
   if (isUsersLoading) return <SidebarSkeleton />;
 
@@ -27,19 +28,10 @@ const Sidebar = () => {
           <Contact className="size-6" />
           <p className="text-lg font-semibold lg:block hidden">Friends</p>
         </div>
-        {/* <div className="flex gap-1">
-          <input
-            type="checkbox"
-            checked={showOnlineUsers}
-            onChange={(e) => setShowOnlineUsers(e.target.checked)}
-          />
-          <label className="text-md ">Show Online Users</label>
-          <span className="text-xs">({onlineUsers.length - 1})</span>
-        </div> */}
       </div>
 
       <div className="overflow-y-auto w-full">
-        {users.map((user) => (
+        {sortedUsers.map((user) => (
           <button
             key={user._id}
             onClick={() => setSelectedUser(user)}
