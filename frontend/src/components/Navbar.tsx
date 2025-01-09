@@ -5,7 +5,8 @@ import { Inbox, LogOut, Settings, User } from "lucide-react";
 const Navbar = () => {
   const { authUser, logout } = useAuthStore();
   return (
-    <header className="backdrop-blur-lg fixed w-full top-0 z-100 bg-blue-100 border-b-2 border-blue-200">
+    // <header className="backdrop-blur-lg fixed w-full top-0 z-100 bg-blue-100 border-b-2 border-blue-200">
+    <header className="w-full bg-blue-100 border-b-2 border-blue-200">
       <div className="container mx-auto px-4 h-16">
         <div className="flex justify-between items-center h-full">
           {/* left side */}
