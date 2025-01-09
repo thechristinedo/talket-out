@@ -61,7 +61,7 @@ const ChatBox = () => {
                   : authUser?.profilePic || "img/avatar.jpg"
               }
               alt="User icon"
-              className="size-12 rounded-full"
+              className="size-12 rounded-full mt-auto"
             />
             <div
               className={`flex flex-col w-full ${
