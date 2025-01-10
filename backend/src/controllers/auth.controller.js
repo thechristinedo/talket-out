@@ -5,10 +5,6 @@ import {
   generateTokenCookie,
   generateVerificationCode,
 } from "../libs/utils.js";
-import {
-  sendVerificationEmail,
-  sendWelcomeEmail,
-} from "../libs/mailtrap/emails.js";
 import cloudinary from "../libs/cloudinary.js";
 
 export const signup = async (req, res) => {
@@ -21,7 +17,7 @@ export const signup = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user)
-      return res.status(400).json({ message: "Email is already taken." });
+      return res.status(400).json({ message: "Email is already taken" });
     if (password.length < 8)
       return res
         .status(400)
@@ -50,11 +46,12 @@ export const signup = async (req, res) => {
     }
 
     // send verification email
-    await sendVerificationEmail(
-      newUser.email,
-      newUser.fullName,
-      verificationToken
-    );
+    // await sendVerificationEmail(
+    //   newUser.email,
+    //   newUser.fullName,
+    //   verificationToken
+    // );
+
     return res.status(201).json({
       _id: newUser._id,
       email: newUser.email,
@@ -87,7 +84,7 @@ export const verifyEmail = async (req, res) => {
     await user.save();
 
     // send welcome email
-    await sendWelcomeEmail(user.email, user.fullName);
+    // await sendWelcomeEmail(user.email, user.fullName);
     return res.status(200).json({
       message: "Email verified successfully",
       email: user.email,

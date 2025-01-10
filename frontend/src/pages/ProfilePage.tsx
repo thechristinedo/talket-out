@@ -37,8 +37,8 @@ const ProfilePage = () => {
     );
 
   return (
-    <div className="min-h-screen pt-20 ">
-      <div className="max-w-2xl mx-auto px-4 py-8 rounded-lg bg-gray-50">
+    <div className="h-[calc(100vh-4rem-2px)] flex items-center justify-center">
+      <div className="max-w-2xl w-full mx-auto px-4 py-8 rounded-lg h-[calc(100vh-8rem)] xl:h-auto xl:bg-gray-100 ">
         <div className="text-center mb-4">
           <h1 className="text-2xl font-bold">Edit Profile</h1>
         </div>
@@ -99,12 +99,12 @@ const ProfilePage = () => {
             <p className="text-md">{authUser?.createdAt?.slice(0, 10)}</p>
           </div>
           <div className="flex justify-between">
-            <p className="text-md font-semibold">Account Status</p>
+            {/* <p className="text-md font-semibold">Account Status</p>
             {authUser?.isVerified ? (
               <p className="text-green-700 font-medium">Verified</p>
             ) : (
               <p className="text-red-700 font-medium">Not Verified</p>
-            )}
+            )} */}
           </div>
         </div>
       </div>
